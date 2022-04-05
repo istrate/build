@@ -9,7 +9,6 @@ LABEL io.k8s.description="A basic Apache HTTP Server child image, uses ONBUILD" 
 
 ENV DOCROOT=/var/www/html
 
-RUN yum -y update
 RUN yum -y install httpd
 RUN yum clean all
 RUN mkdir -p /var/www/html
