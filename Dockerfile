@@ -12,7 +12,7 @@ ENV DOCROOT=/var/www/html
 ONBUILD COPY src/ ${DOCROOT}
 
 RUN yum -y install --nodocs --disableplugin=subscription-manager httpd && \
-    yum clean --disbaleplugin=subscription-manager all && \
+    yum clean --disableplugin=subscription-manager all && \
     mkdir -p /var/www/html && \
     echo "Web server up an running" >> $DOCROOT/index.html && \
     sed -i "s/Listen 80/Listen 8080/g" /etc/httpd/conf/httpd.conf && chgrp -R 0 /var/log/httpd /var/run/httpd && chmod -R g=u /var/log/httpd /var/run/httpd
