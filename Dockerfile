@@ -9,12 +9,13 @@ LABEL io.k8s.description="A basic Apache HTTP Server child image, uses ONBUILD" 
 
 ENV DOCROOT=/var/www/html
 
-RUN yum -y install httpd
-RUN yum clean all
-RUN mkdir -p /var/www/html
-RUN echo "Web server up an running" >> $DOCROOT/index.html 
+ONBUILD COPY src/ ${DOCROOT}
 
-RUN sed -i "s/Listen 80/Listen 8080/g" /etc/httpd/conf/httpd.conf && chgrp -R 0 /var/log/httpd /var/run/httpd && chmod -R g=u /var/log/httpd /var/run/httpd
+RUN yum -y install httpd && \
+    yum clean all && \
+    mkdir -p /var/www/html && \
+    echo "Web server up an running" >> $DOCROOT/index.html && \
+    sed -i "s/Listen 80/Listen 8080/g" /etc/httpd/conf/httpd.conf && chgrp -R 0 /var/log/httpd /var/run/httpd && chmod -R g=u /var/log/httpd /var/run/httpd
 
 USER 1001
 
